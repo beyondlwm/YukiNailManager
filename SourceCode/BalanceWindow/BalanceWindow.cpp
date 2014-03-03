@@ -169,6 +169,14 @@ void CBalanceWindow::CreateControls()
 
     m_pCustomerDataText = new wxTextCtrl( itemDialog1, ID_TEXTCTRL7, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxEXPAND|wxTE_PROCESS_ENTER );
     m_pCustomerDataText->SetMaxLength(11);
+    wxArrayString completion_choices;
+    const std::map<const TString, CMember*>& memberMap = CMemberManager::GetInstance()->GetMemberMap();
+    for (std::map<const TString, CMember*>::const_iterator iter = memberMap.begin(); iter != memberMap.end(); ++iter)
+    {
+        completion_choices.push_back(iter->first);
+    }
+
+    m_pCustomerDataText->AutoComplete(completion_choices);
     m_pMemberVerifySizer->Add(m_pCustomerDataText, 1, wxGROW|wxALL, 0);
 
     m_pMemeberVerifyBtn = new wxButton( itemDialog1, ID_BUTTON7, wxGetTranslation(wxString() + (wxChar) 0x9A8C + (wxChar) 0x8BC1), wxDefaultPosition, wxDefaultSize, 0 );
