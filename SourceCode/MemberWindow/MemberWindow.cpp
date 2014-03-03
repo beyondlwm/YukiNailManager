@@ -146,6 +146,13 @@ void CMemberWindow::CreateControls()
     m_pMemberTelText->SetMaxLength(11);
     m_pMemberTelText->SetForegroundColour(wxColour(119, 225, 175));
     m_pMemberTelText->SetFont(wxFont(14, wxSWISS, wxNORMAL, wxBOLD, false, wxT("方正书宋简体")));
+    wxArrayString completion_choices;
+    const std::map<const TString, CMember*>& memberMap = CMemberManager::GetInstance()->GetMemberMap();
+    for (std::map<const TString, CMember*>::const_iterator iter = memberMap.begin(); iter != memberMap.end(); ++iter)
+    {
+        completion_choices.push_back(iter->first);
+    }
+    m_pMemberTelText->AutoComplete(completion_choices);
     itemBoxSizer5->Add(m_pMemberTelText, 3, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     itemBoxSizer5->Add(5, 5, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5);
